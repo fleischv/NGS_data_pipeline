@@ -91,6 +91,8 @@ workflow {
         "$params.in/$params.se_glob")
     .collect()
 
+    fasta_files | view
+
     mergeFasta (fasta_files, ref_ch)
     .set { merged_fasta }
 
