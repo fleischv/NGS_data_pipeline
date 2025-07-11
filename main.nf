@@ -2,7 +2,7 @@
 
 
 params.in = "/mnt/c/Users/Vanessa Fleischer/NextFlow/NextFlow_ABI/exam/hepatitis/"
-params.se_glob = "*.{fa,fasta}"      // For all FastQ, we'll filter later for true single-end
+params.se_glob = "*.{fa,fasta}" 
 params.accession = "M21012"
 params.out = 'results/'
 
@@ -90,9 +90,7 @@ workflow {
     .fromPath(
         "$params.in/$params.se_glob")
     .collect()
-
-    fasta_files | view
-
+    
     mergeFasta (fasta_files, ref_ch)
     .set { merged_fasta }
 
