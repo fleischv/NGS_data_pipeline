@@ -32,13 +32,14 @@ process mergeFasta {
 
     input:
     path fasta_files
+    path ref_ch
 
     output:
     path 'merged.fasta'
 
     script:
     """
-    cat ${fasta_files.join(' ')} > merged.fasta
+    cat ${ref_ch} ${fasta_files.join(' ')} > merged.fasta
     """
 }
 
@@ -48,6 +49,7 @@ process mafft_aligner {
 
     input:
         path merged_fasta
+
 
     output:
         path "aligned.fasta"
@@ -89,7 +91,7 @@ workflow {
         "$params.in/$params.se_glob")
     .collect()
 
-    mergeFasta (fasta_files)
+    mergeFasta (fasta_files, ref_ch)
     .set { merged_fasta }
 
     mafft_aligner(merged_fasta)
